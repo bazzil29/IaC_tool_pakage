@@ -1,0 +1,70 @@
+{
+    "provider":{
+        "region":"ap-southeast-2"
+    },
+    "resources":[
+        {
+            "type":"resource",
+            "resource":"aws_instance",
+            "config":{
+                "name":"main_instance",
+                "instance_type":"t2.micro",
+                "aws_ami":"ubuntu",
+                "tags":"Name=\"Main instance test\"",
+                "aws_ebs_volume":"main_instance_ebs"
+            }
+        },
+        {
+            "type":"resource",
+            "resource":"aws_ebs_volume",
+            "config":{
+                "name":"main_instance_ebs",
+                "availability_zone":"ap-southeast-2",
+                "size":"8"
+            }
+        },
+        {
+            "type":"resource",
+            "resource":"aws_vpc",
+            "config":{
+                "name":"main_vpc",
+                "cidr_block":"10.0.0.0/16",
+                "tags":"Name=\"The Main vpc\""
+            }
+        },
+        {
+            "type":"resource",
+            "resource":"aws_internet_gateway",
+            "config":{
+                "name":"main_int",
+                "aws_vpc":"main_vpc"
+            }
+        },
+        {
+            "type":"resource",
+            "resource":"aws_subnet",
+            "config":{
+                "name":"main_subnet",
+                "aws_vpc":"main_vpc",
+                "cidr_block":"10.1.1.0/24"
+            }
+        },
+        {
+            "type":"resource",
+            "resource":"aws_route_table",
+            "config":{
+                "name":"main_route",
+                "aws_vpc":"main_vpc",
+                "route":{
+                    "cidr_block":"0.0.0.0/0",
+                    "aws_internet_gateway":"main_int"
+                },
+                "aws_subnet":"main_subnet"
+            }
+        }
+    ],
+    "comment":{
+        "ami":"ubuntu or CentOS"
+    }
+} 
+
