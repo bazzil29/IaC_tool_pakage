@@ -1,5 +1,5 @@
 {
-  "name": "iac_tool_pakage",
+  "name": "iac_tool_package",
   "version": "1.0.0",
   "description": "This is a tool to help Infrastructure as Code simply coding and push to public cloud",
   "main": "index.js",
@@ -12,7 +12,8 @@
     "tf-plan": "bin/terraform-plan.js",
     "tf-aws": "cmd/aws/gen.js",
     "tf-gcp": "cmd/gcp/gen.js",
-    "tf-swap": "swap/index.js"
+    "tf-swap": "swap/index.js",
+    "tf-install": "bin/terraform-install.js"
   },
   "repository": {
     "type": "git",
