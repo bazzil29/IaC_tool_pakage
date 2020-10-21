@@ -1,0 +1,26 @@
+{
+  "name": "iac_tool_pakage",
+  "version": "1.0.0",
+  "description": "This is a tool to help Infrastructure as Code simply coding and push to public cloud",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bazzil29/IaC_tool_pakage.git"
+  },
+  "author": "bazzil29",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bazzil29/IaC_tool_pakage/issues"
+  },
+  "homepage": "https://github.com/bazzil29/IaC_tool_pakage#readme",
+  "devDependencies": {
+    "commander": "^6.1.0",
+    "readline-sync": "^1.4.10"
+  },
+  "dependencies": {
+    "shelljs": "^0.8.4"
+  }
+}
