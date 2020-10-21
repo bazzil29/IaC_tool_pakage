@@ -1,6 +1,6 @@
 {
   "name": "iac_tool_package",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "This is a tool to help Infrastructure as Code simply coding and push to public cloud",
   "main": "index.js",
   "scripts": {
@@ -30,6 +30,8 @@
     "readline-sync": "^1.4.10"
   },
   "dependencies": {
-    "shelljs": "^0.8.4"
+    "shelljs": "^0.8.4",
+    "commander": "^6.1.0",
+    "readline-sync": "^1.4.10"
   }
 }
