@@ -5,7 +5,7 @@ const generator = (config)=>{
   owners = ["${config.ami=="ubuntu"?"099720109477":"679593333241"}"]
   filter {
     name   = "name"
-    values = ["${(!!config.aws_ami)?config.aws_ami:"ubuntu"}*"]
+    values = ["${(!!config.ami)?config.ami:"ubuntu"}*"]
   }
 }
 resource "aws_instance" "${(!!config.name)?config.name:"Default_name"}" {
