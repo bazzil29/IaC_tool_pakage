@@ -30,5 +30,5 @@ override.tf.json
 ./node_modules
 */node_modules/**
 /node_modules
-
+/terraformer
 *.zip

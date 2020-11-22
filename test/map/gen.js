@@ -5,7 +5,7 @@ const aws_gen = require("../../config/aws");
 const mapping_config = require("../../config/map-config/index");
 const sortResources =  require("../../config/sort-resources").sortResources;
 
-const fs = require("fs");
+const fs = require("fs-extra");
 commander
     .option("-f,--file <path to file>","Use JSON config file to generate terraform code!");
 
@@ -22,12 +22,12 @@ try {
         awsCode+=mapping_config[resource.resource].aws(resource);
     })
 
-    fs.writeFile("./gcp/main.tf",gcpCode,(error)=>{
+    fs.outputFile("./gcp/main.tf",gcpCode,(error)=>{
         if(!!error){
             console.log(error);
         }
     })
-    fs.writeFile("./aws/main.tf",awsCode,(error)=>{
+    fs.outputFile("./aws/main.tf",awsCode,(error)=>{
         if(!!error){
             console.log(error);
         }

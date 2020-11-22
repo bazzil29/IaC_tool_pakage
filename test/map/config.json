@@ -22,7 +22,7 @@
             "disk":"disk-1"
         },
         {
-            "resource":"subnet",
+            "resource":"subnetwork",
             "network":"default-network",
             "name":"subnet-1",
             "cidr_block":"10.1.0.0/16"
