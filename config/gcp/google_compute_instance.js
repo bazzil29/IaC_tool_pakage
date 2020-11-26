@@ -1,3 +1,22 @@
+const osFilter = (os)=>{
+    if(os=="ubuntu"){
+        return "ubuntu-os-cloud/ubuntu-2004-lts"
+    }
+
+    if(os=="centos"){
+        return "centos-cloud/centos-7"
+    }
+
+    if(os=="debian"){
+        return "debian-cloud/debian-9"
+    }
+
+    if(os="window"){
+        return "windows-cloud/windows-2016"
+    }
+}
+
+
 const generator = (config)=>{
     return (
 `
@@ -8,7 +27,7 @@ resource "google_compute_instance" "${!!config.name?config.name:"default"}" {
 
     boot_disk {
             initialize_params {
-            image = "${!!config.image?config.image:"debian-cloud/debian-9"}"
+            image = "${!!config.image?osFilter(config.image):"debian-cloud/debian-9"}"
         }
     }
     network_interface {

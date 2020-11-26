@@ -1,11 +1,25 @@
+const osFilter = (os)=>{
+  if(os=="ubuntu"){
+    return "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server"
+  }
+  if(os=="centos"){
+    return "CentOS Linux 7 x86_64 HVM EBS *"
+  }
+  if(os="debian"){
+    return "Debian GNU/Linux 9"
+  }
+
+}
+
 const generator = (config)=>{
     return (
-`data "aws_ami" "ami-${config.name}" { 
+`
+data "aws_ami" "ami-${config.name}" { 
   most_recent = true
   owners = ["${config.ami=="ubuntu"?"099720109477":"679593333241"}"]
   filter {
     name   = "name"
-    values = ["${(!!config.ami)?config.ami:"ubuntu"}*"]
+    values = ["${(!!config.ami)?osFilter(config.ami):"ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server"}*"]
   }
 }
 resource "aws_instance" "${(!!config.name)?config.name:"Default_name"}" {
