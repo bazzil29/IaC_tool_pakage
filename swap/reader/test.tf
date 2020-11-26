@@ -6,38 +6,17 @@ provider "aws" {
 
 resource "aws_vpc" "default-network" {
 cidr_block       = "10.0.0.0/16"
-
-
-
-
-
-
-
 }
 
 resource "aws_ebs_volume" "disk-1" {
     availability_zone = "usa"
     size = 16
-    type = "gp2"
-    
-    
-    
-    
-    
-    
-    
-    
+    type = "gp2"  
 }
                
 resource "aws_subnet" "subnet-1" {
     vpc_id = aws_vpc.default-network.id
     cidr_block = "10.1.0.0/16"
-    
-    
-    
-    
-    
-    
 }
 resource "aws_network_acl" "deault-firewall" {
     vpc_id = aws_vpc.default-network.id
@@ -199,32 +178,6 @@ data "aws_ami" "ami-main_instance" {
 resource "aws_instance" "main_instance" {
     ami           = data.aws_ami.ami-main_instance.id
     instance_type = "t2.micro"
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     tags = {
     Name="Default Instance"
   }
@@ -237,9 +190,6 @@ resource "aws_network_interface" "interface_main_instance" {
       device_index = 1
     }
   }
-
-
-
 
 resource "aws_volume_attachment" "volume-att-main_instance" {
     device_name = "/dev/sdc"

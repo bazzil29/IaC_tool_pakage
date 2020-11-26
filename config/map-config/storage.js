@@ -46,7 +46,6 @@ const getDiskType  = (type,cloud) =>{
 }
 
 const aws = (config)=>{
-    // console.log(REGION.getRegion(config.zone,"aws"));
     const code = aws_ebs_volume.generator({
         name:config.name,
         availability_zone:REGION.getZone(config.zone,"aws"),
@@ -57,7 +56,6 @@ const aws = (config)=>{
 }
 
 const gcp = (config) =>{
-    // console.log(config);
     const code = google_compute_disk.generator({
         name:config.name,
         zone:REGION.getZone(config.zone,"gcp"),
