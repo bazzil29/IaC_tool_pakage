@@ -51,9 +51,13 @@ resource "aws_instance" "${(!!config.name)?config.name:"Default_name"}" {
     ${!!config.volume_tags?`volume_tags = "${config.volume_tags}"`:``}
     ${!!config.root_block_device?`root_block_device = "${config.root_block_device}"`:``}
     ${!!config.ephemeral_block_device?`ephemeral_block_device = "${config.ephemeral_block_device}"`:``}
+    provisioner "local-exec" {
+      command = "${!!config.startup_script?config.startup_script:`echo Hello world!`}"
+    }
     tags = {
     ${(!!config.tags)?config.tags:`Name="Default Instance"`}
-  }
+    }
+
 }
 ${!!config.aws_subnet?`
 resource "aws_network_interface" "interface_${config.name}" {

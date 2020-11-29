@@ -19,8 +19,7 @@ const osFilter = (os)=>{
 
 const generator = (config)=>{
     return (
-`
-resource "google_compute_instance" "${!!config.name?config.name:"default"}" {
+`resource "google_compute_instance" "${!!config.name?config.name:"default"}" {
     name = "${!!config.name?config.name:"default"}"
     machine_type = "${!!config.machine_type?config.machine_type:"f1-micro"}"
     zone         = "${!!config.zone?config.zone:"us-west1-a"}"
@@ -30,9 +29,13 @@ resource "google_compute_instance" "${!!config.name?config.name:"default"}" {
             image = "${!!config.image?osFilter(config.image):"debian-cloud/debian-9"}"
         }
     }
+
+
     network_interface {
         ${!!config.google_compute_network?`network = google_compute_network.${config.google_compute_network}.name`:``}
         subnetwork = google_compute_subnetwork.${!!config.google_compute_subnetwork?config.google_compute_subnetwork:"public_subnet_1"}.name
+
+    access_config {}
     }
 
     ${!!config.description?`description = "${config.description}"`:``}
@@ -47,7 +50,7 @@ resource "google_compute_instance" "${!!config.name?config.name:"default"}" {
     ${!!config.metadata?`metadata = {
     ssh-keys = "${config.metadata.key}"
 }`:``}
-    ${!!config.metadata_startup_script?`metadata_startup_script = "${config.metadata_startup_script }"`:``}
+    ${!!config.startup_script?`metadata_startup_script = "${config.startup_script }"`:`"echo Helloworld!"`}
     ${!!config.min_cpu_platform?`min_cpu_platform = "${config.min_cpu_platform }"`:``}
     ${!!config.project?`project = "${config.project }"`:``}
     ${!!config.scheduling?`scheduling = "${config.scheduling }"`:``}

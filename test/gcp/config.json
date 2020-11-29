@@ -17,7 +17,8 @@
                 },
                 "metadata_startup_script":"sudo apt-get update; sudo apt-get install -yq build-essential python-pip rsync; pip install flask",
                 "google_compute_network":"vpc",
-                "google_compute_subnetwork":"public-subnet-1"
+                "google_compute_subnetwork":"public-subnet-1",
+                "startup_script":"sudo apt-get update && sudo apt upgrade -y && sudo apt  install -y docker.io  docker-compose && sudo systemctl restart docker && mkdir  ~/wordpress-compose && cd ~/wordpress-compose && wget https://phuongngo1.s3-ap-southeast-2.amazonaws.com/docker-compose.yml && sudo docker-compose up -d"
             }
         },
         {

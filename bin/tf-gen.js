@@ -56,6 +56,7 @@ if(commander.type == "gcp") {
         }
     })
 
+
     fs.outputFile(commander.output,terraform_code,(err)=>{
         if(err){
             return console.log(err);
