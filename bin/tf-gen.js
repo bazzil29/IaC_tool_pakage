@@ -78,13 +78,13 @@ if(commander.type == "multi") {
         awsCode+=mapping_config[resource.resource].aws(resource);
     })
 
-    fs.outputFile("./gennerated/gcp-resources.tf",gcpCode,(error)=>{
+    fs.outputFile("./gennerated/gcp/gcp-resources.tf",gcpCode,(error)=>{
         if(!!error){
             console.log(error);
             return
         }
     })
-    fs.outputFile("./gennerated/aws-resources.tf",awsCode,(error)=>{
+    fs.outputFile("./gennerated/aws/aws-resources.tf",awsCode,(error)=>{
         if(!!error){
             console.log(error);
             return

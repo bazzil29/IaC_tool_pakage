@@ -36,9 +36,8 @@ resource "aws_instance" "${(!!config.name)?config.name:"Default_name"}" {
     ${!!config.key_name?`key_name = "${config.key_name}"`:``}
     ${!!config.get_password_data?`get_password_data = "${config.get_password_data}"`:``}
     ${!!config.monitoring?`monitoring = "${config.monitoring}"`:``}
-    ${!!config.security_groups?`security_groups = "${config.security_groups}"`:``}
-    ${!!config.vpc_security_group_ids?`vpc_security_group_ids = "${config.vpc_security_group_ids}"`:``}
-    ${!!config.subnet_id?`subnet_id = "${config.subnet_id}"`:``}
+    ${!!config.security_group?`vpc_security_group_ids = [aws_security_group.${config.security_group}.id]`:``}
+    ${!!config.aws_subnet?`subnet_id = aws_subnet.${config.aws_subnet}.id`:``}
     ${!!config.associate_public_ip_address?`associate_public_ip_address = "${config.associate_public_ip_address}"`:``}
     ${!!config.private_ip?`private_ip = "${config.private_ip}"`:``}
     ${!!config.secondary_private_ips?`secondary_private_ips = "${config.secondary_private_ips}"`:``}
@@ -51,27 +50,19 @@ resource "aws_instance" "${(!!config.name)?config.name:"Default_name"}" {
     ${!!config.volume_tags?`volume_tags = "${config.volume_tags}"`:``}
     ${!!config.root_block_device?`root_block_device = "${config.root_block_device}"`:``}
     ${!!config.ephemeral_block_device?`ephemeral_block_device = "${config.ephemeral_block_device}"`:``}
-    provisioner "local-exec" {
-      command = "${!!config.startup_script?config.startup_script:`echo Hello world!`}"
-    }
+    user_data = <<-EOF
+    #! /bin/bash
+    ${!!config.startup_script?config.startup_script:"echo Helloworld!"}
+    EOF
     tags = {
     ${(!!config.tags)?config.tags:`Name="Default Instance"`}
     }
-
 }
-${!!config.aws_subnet?`
-resource "aws_network_interface" "interface_${config.name}" {
-    subnet_id       = aws_subnet.${config.aws_subnet}.id
-    attachment {
-      instance     = aws_instance.${config.name}.id
-      device_index = 1
-    }
-  }\n
-`:``}
+
 
 ${(!!config.aws_ebs_volume)?`
 resource "aws_volume_attachment" "volume-att-${config.name}" {
-    device_name = "/dev/sdc"
+    device_name = "/dev/sdd"
     volume_id = aws_ebs_volume.${config.aws_ebs_volume}.id
     instance_id = aws_instance.${config.name}.id
 }\n
