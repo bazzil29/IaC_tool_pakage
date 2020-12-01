@@ -3,7 +3,7 @@ const generator = (config)=>{
 `resource "google_compute_subnetwork" "${!!config.name?config.name:"default_subnet"}" {
     name = "${!!config.name?config.name:"default_subnet"}"
     ip_cidr_range = "${!!config.ip_cidr_range?config.ip_cidr_range:"10.10.1.0/24"}"
-    network = google_compute_network.${!!config.google_compute_network?config.google_compute_network:"vpc"}.name
+    ${!!config.google_compute_network?`network = google_compute_network.${config.google_compute_network}.name`:""}
     ${!!config.region?`region = "${config.region}"`:``}
     ${!!config.project?`project = "${config.project}"`:``}
     ${!!config.log_config?`log_config = "${config.log_config}"`:``}

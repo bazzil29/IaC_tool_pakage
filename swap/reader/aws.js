@@ -163,16 +163,16 @@ const read = (file_path)=>{
     
                     if(countBraces==2&&isInsideIngress&&characterInLine.includes("=")){
                         if(characterInLine.includes("protocol")){
-                            resources[k].ingress[resources[k].egress.length-1].protocol = characterInLine[2];
+                            resources[k].ingress[resources[k].ingress.length-1].protocol = characterInLine[2];
                         }
                         if(characterInLine.includes("action")){
-                            resources[k].ingress[resources[k].egress.length-1].action = characterInLine[2];
+                            resources[k].ingress[resources[k].ingress.length-1].action = characterInLine[2];
                         }
                         if(characterInLine.includes("from_port")){
-                            resources[k].ingress[resources[k].egress.length-1].from_port = characterInLine[2];
+                            resources[k].ingress[resources[k].ingress.length-1].from_port = characterInLine[2];
                         }
                         if(characterInLine.includes("to_port")){
-                            resources[k].ingress[resources[k].egress.length-1].to_port = characterInLine[2];
+                            resources[k].ingress[resources[k].ingress.length-1].to_port = characterInLine[2];
                         }
                     }
     

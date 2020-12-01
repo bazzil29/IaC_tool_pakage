@@ -3,7 +3,7 @@ const generator = (config)=>{
 `
 resource "google_compute_disk" "${config.name}" {
     name  = "${config.name}"
-
+    ${!!config.size?`size = "${config.size}"`:``}
     ${!!config.type?`type = "${config.type}"`:``}
     ${!!config.labels?`labels = ${config.labels}`:``}
     ${!!config.physical_block_size_bytes?`physical_block_size_bytes = ${config.physical_block_size_bytes}`:``}

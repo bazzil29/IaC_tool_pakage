@@ -61,18 +61,18 @@ const checkFirewalls = (firewalls)=>{
         if(!!e.ingress){
             e.ingress.forEach(protocol =>{
                 const  protocol_name = removeDoubleQuote(protocol.protocol); 
-                if(!!allows.protocols[protocol_name]&&removeDoubleQuote(protocol.action)=="allow"){
+                if(!!allows.protocols[protocol_name]){
                     allows.protocols[protocol_name].ports.push(protocol.from_port);
                 }
-                if(!!!allows.protocols[protocol_name]&&removeDoubleQuote(protocol.action)=="allow"){
+                if(!!!allows.protocols[protocol_name]){
                     allows.protocols[protocol_name] = {protocol:protocol_name,ports:[protocol.from_port]}
                 }
-                if(!!denies.protocols[protocol_name]&&removeDoubleQuote(protocol.action)=="deny"){
-                    denies.protocols[protocol_name].ports.push(protocol.from_port);
-                }
-                if(!!!denies.protocols[protocol_name]&&removeDoubleQuote(protocol.action)=="deny"){
-                    denies.protocols[protocol_name] = {protocol:protocol_name,ports:[protocol.from_port]}
-                }
+                // if(!!denies.protocols[protocol_name]){
+                //     denies.protocols[protocol_name].ports.push(protocol.from_port);
+                // }
+                // if(!!!denies.protocols[protocol_name]){
+                //     denies.protocols[protocol_name] = {protocol:protocol_name,ports:[protocol.from_port]}
+                // }
             })
         }
         // console.log(Object.keys(allows.protocols).map(e=>allows.protocols[e]));
@@ -137,6 +137,7 @@ module.exports = {getConfig :(file_path)=>{
                     instance.resource = "instance";
                     instance.name = removeDoubleQuote(e.name);
                     instance.data_ami = e.ami;
+                    instance.startup_script = e.user_data
                     instance.instance_type = removeDoubleQuote(e.instance_type);
                     instances.push(instance);
                 }
@@ -178,7 +179,7 @@ module.exports = {getConfig :(file_path)=>{
                     networkAtt.subnet = getMidValue(e.subnet_id);
                     networkAtts.push(networkAtt);
                 }
-                if(removeDoubleQuote(e.cloudType) == "aws_network_acl"){
+                if(removeDoubleQuote(e.cloudType) == "aws_security_group"){
                         const firewall = {};
                         firewall.name = removeDoubleQuote(e.name);
                         firewall.resource = "firewall";

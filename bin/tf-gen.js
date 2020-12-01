@@ -100,6 +100,9 @@ if(commander.type == "swap"){
         const CONFIG = getMappingConfig.getConfig(commander.file);
         let gcpCode = `${mapping_config.provider.gcp(CONFIG)}`;
         CONFIG.resources.map(resource=>{
+            if(!!!resource.zone){
+                resource.zone = CONFIG.location;
+            }
             gcpCode+=mapping_config[resource.resource].gcp(resource);
         })
 

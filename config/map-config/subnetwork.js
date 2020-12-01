@@ -22,7 +22,7 @@ const gcp = (config) =>{
     const code = google_compute_subnetwork.generator({
         name:config.name,
         ip_cidr_range:config.cidr_block,
-        network:config.network,
+        google_compute_network:config.network,
         // region:region_map_config.getRegion(config.location,"gcp")
     })
     return code;

@@ -50,7 +50,7 @@ const generator = (config)=>{
     ${!!config.metadata?`metadata = {
     ssh-keys = "${config.metadata.key}"
 }`:``}
-    ${!!config.startup_script?`metadata_startup_script = "${config.startup_script }"`:`"echo Helloworld!"`}
+    ${!!config.startup_script?`metadata_startup_script = "${config.startup_script }"`:`metadata_startup_script = "echo Helloworld!"`}
     ${!!config.min_cpu_platform?`min_cpu_platform = "${config.min_cpu_platform }"`:``}
     ${!!config.project?`project = "${config.project }"`:``}
     ${!!config.scheduling?`scheduling = "${config.scheduling }"`:``}
