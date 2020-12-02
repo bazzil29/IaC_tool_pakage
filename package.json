@@ -1,6 +1,6 @@
 {
   "name": "iac_tool_package",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "This is a tool to help Infrastructure as Code simply coding and push to public cloud",
   "main": "index.js",
   "scripts": {
