@@ -3,7 +3,7 @@ const aws_reader =  require("../reader/aws");
 const region_map_config =  require("../../config/map-config/region");
 const sortResources = require("../../config/sort-resources");
 const storage_map_config = require("../../config/map-config/storage");
-
+const instance_map_config = require("../../config/map-config/instance");
 const removeDoubleQuote = (rawText)=>{
     const text = rawText.replace(/\"/g,'');
     return text;
@@ -80,9 +80,19 @@ const checkFirewalls = (firewalls)=>{
         e.denies = Object.keys(denies.protocols).map(e=>denies.protocols[e])
         // console.log(e);
     })
-
-
 }
+
+const osConnect = (os,instances)=>{
+    instances.map(e=>{
+        os.map(f=>{
+            if(e.data_ami.includes(f.name)){
+                e.os = f.type
+            }
+        })
+    })
+}
+
+
 
 
 const getMapConfig = (provider,instances,networks,subnetworks,storages,firewalls)=>{
@@ -98,6 +108,8 @@ const getMapConfig = (provider,instances,networks,subnetworks,storages,firewalls
     
     return config;
 }
+
+
 
 
 
@@ -126,7 +138,16 @@ module.exports = {getConfig :(file_path)=>{
                 if(removeDoubleQuote(e.cloudType) =="aws_ami"){
                     const osTmp = {};
                     osTmp.name = removeDoubleQuote(e.name);
-                    osTmp.type = e.filter.values.includes("ubuntu")?"ubuntu":"centos";
+                    console.log(e.filter.values.includes("ubuntu"));
+                    if(e.filter.values.includes("ubuntu")){
+                        osTmp.type = "ubuntu"
+                    }else{
+                        if(e.filter.values.includes("centos")){
+                            osTmp.type = "centos";
+                        }else{
+                            osTmp.type = "debian"
+                        }
+                    }
                     os.push(osTmp);
                 }   
             }
@@ -137,8 +158,8 @@ module.exports = {getConfig :(file_path)=>{
                     instance.resource = "instance";
                     instance.name = removeDoubleQuote(e.name);
                     instance.data_ami = e.ami;
-                    instance.startup_script = e.user_data
-                    instance.instance_type = removeDoubleQuote(e.instance_type);
+                    instance.startup_script = e.startup_script
+                    instance.instance_type = instance_map_config.getIntanceType(removeDoubleQuote(e.instance_type),"aws");
                     instances.push(instance);
                 }
     
@@ -194,6 +215,7 @@ module.exports = {getConfig :(file_path)=>{
         connectStorages(instances,storages,storageAtts);
         connectNetworks(instances,networks,subnetworks,networkAtts);
         checkFirewalls(firewalls);
+        osConnect(os,instances)
         const config = getMapConfig(provider,instances,networks,subnetworks,storages,firewalls);
         return config;
     }catch(error){

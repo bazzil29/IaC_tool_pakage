@@ -27,6 +27,7 @@ const read = (file_path)=>{
         let isInsideFilter = false;
         let isInsideTag = false;    
         let isInsideAttachment = false;
+        let isInsideUserData = false;
     
         const lines = removeCommentLine(textData.split("\n"));
     
@@ -105,11 +106,26 @@ const read = (file_path)=>{
                 if(!!resources[k]){
                     if(countBraces==1){
                         if(characterInLine.includes("=")&&!characterInLine.includes("{")&&characterInLine[0]!="name"){
-                            resources[k][characterInLine[0]]=characterInLine[2]
+
+                            if(characterInLine.includes("<<-EOF")&&characterInLine.includes("user_data")){
+                                isInsideUserData = true;
+                                resources[k]["startup_script"] = '';
+                            }else{
+                                resources[k][characterInLine[0]]=characterInLine[2]
+                            }
                         }else{
                             if(characterInLine.includes("tags")){
                                 isInsideTag = true;
                             }
+                            
+                            if(isInsideUserData&&!characterInLine.includes("/bin/bash")&&!characterInLine.includes("EOF")){
+                                resources[k].startup_script += lines[i].toString();
+                            }
+
+                            if(isInsideUserData&&characterInLine.includes("EOF")){
+                                isInsideUserData = false;
+                            }
+                            
 
                             if(characterInLine.includes("{")){
                                 if(characterInLine[0]=="route"){

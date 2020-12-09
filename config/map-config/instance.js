@@ -11,6 +11,22 @@ const instanceFilter = (type,cloud)=>{
             return config="micro"?"t2.micro":(config="small"?"t2.small":"t2.medium")
 }
 
+const getIntanceType = (type,cloud)=>{
+    if(cloud = "aws"){
+        if(type.includes("micro")){
+            return "micro"
+        }
+
+        if(type.includes("small")){
+            return "small"
+        }
+
+        if(type.includes("medium")){
+            return "medium"
+        }
+    }
+}
+
 const aws = (config) => {
     const code  = aws_instance.generator( {
         name:config.name,
@@ -40,7 +56,7 @@ const gcp =(config)=>{
 }
 
 module.exports = {
-    aws,gcp
+    aws,gcp,getIntanceType
 }
 
 
