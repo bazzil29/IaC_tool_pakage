@@ -50,7 +50,8 @@ const gcp =(config)=>{
         google_compute_subnetwork: config.subnetwork,
         google_compute_disk:config.disk,
         zone:REGION.getZone(config.zone,"gcp"),
-        startup_script:config.startup_script
+        startup_script:config.startup_script,
+        firewall:config.firewall
     })
     return code;
 }

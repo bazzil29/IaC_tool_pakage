@@ -6,7 +6,7 @@ const generator = (config)=>{
             code += `
             ingress {
                 protocol = "${port.protocol}"
-                ${!!port.cidr_block?`cidr_blocks= ["${port.cidr_block}"]`:`cidr_blocks = ["0.0.0.0/0"]`}
+                ${!!port.cidr_block?`cidr_blocks = ["${port.cidr_block}"]`:`cidr_blocks = ["0.0.0.0/0"]`}
                 from_port = ${port.port} 
                 to_port =  ${port.port}
             }
@@ -26,7 +26,6 @@ const generator = (config)=>{
 `resource "aws_security_group" "${config.name}" {
     vpc_id = aws_vpc.${config.aws_vpc}.id
     ${code}
-    
 }\n
 `
     )

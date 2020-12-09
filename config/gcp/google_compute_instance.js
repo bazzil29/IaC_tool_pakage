@@ -38,6 +38,7 @@ const generator = (config)=>{
     access_config {}
     }
 
+
     ${!!config.description?`description = "${config.description}"`:``}
     ${!!config.allow_stopping_for_update?`allow_stopping_for_update = "${config.allow_stopping_for_update}"`:``}
     ${!!config.attached_disk?`allow_stopping_for_update = "${config.attached_disk}"`:``}
@@ -49,19 +50,18 @@ const generator = (config)=>{
     ${!!config.labels?`labels = "${config.labels }"`:``}
     ${!!config.metadata?`metadata = {
     ssh-keys = "${config.metadata.key}"
-}`:``}
+    }`:``}
     ${!!config.startup_script?`metadata_startup_script = "${config.startup_script }"`:`metadata_startup_script = "echo Helloworld!"`}
     ${!!config.min_cpu_platform?`min_cpu_platform = "${config.min_cpu_platform }"`:``}
     ${!!config.project?`project = "${config.project }"`:``}
     ${!!config.scheduling?`scheduling = "${config.scheduling }"`:``}
     ${!!config.scratch_disk?`scratch_disk = "${config.scratch_disk }"`:``}
     ${!!config.service_account?`service_account = "${config.service_account }"`:``}
-    ${!!config.tags?`tags = "${config.tags }"`:``}
+    ${!!config.firewall?`tags = ["deny-${config.firewall}","allow-${config.firewall}"]`:``}
     ${!!config.shielded_instance_config?`shielded_instance_config = "${config.shielded_instance_config }"`:``}
     ${!!config.enable_display?`enable_display = "${config.enable_display }"`:``}
     ${!!config.resource_policies?`resource_policies = "${config.resource_policies }"`:``}
 }
-
 ${!!config.google_compute_disk?`resource "google_compute_attached_disk" "disk_att_${config.name}" {
     disk     = google_compute_disk.${config.google_compute_disk}.id
     instance = google_compute_instance.${config.name}.id

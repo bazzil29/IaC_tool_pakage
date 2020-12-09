@@ -138,7 +138,6 @@ module.exports = {getConfig :(file_path)=>{
                 if(removeDoubleQuote(e.cloudType) =="aws_ami"){
                     const osTmp = {};
                     osTmp.name = removeDoubleQuote(e.name);
-                    console.log(e.filter.values.includes("ubuntu"));
                     if(e.filter.values.includes("ubuntu")){
                         osTmp.type = "ubuntu"
                     }else{

@@ -1,29 +1,25 @@
-# IaC_tool_pakage
-Usage: tf-gen [options]
+# IAC TOOL
 
+## install
+	npm install -g iac_tool_package
+## usage
 
-Options:
+ 1.  tf-gen
+		 tf-gen [options]
 
-  -t,--type <cloud flatform or type to gen>  aws,gcp,multi,swap
+			Options:
+				-t,--type aws,gcp,multi,swap
+				-c,--cloud aws or gcp flatform's
+				code base to convert if use swap type (default: "aws")
+				-f,--file path file to read
+				-o,--output Name file and path to
+				store code, default is "resources.tf" (default: "resources.tf")
+				-h, --help display help for command
 
-  -c,--cloud <cloud flatform> aws or gcp flatform's code base to convert if use swap type (default: "aws")
+2. tf-reverse [options]
 
-  -f,--file <path to file> path file to read
-
-
-  -o,--output <out put file> Name file and path tostore code, default is "resources.tf" (default: "resources.tf")
-
-
-  -h, --help display help for command
-
-
-
-
-
-Usage: tf-reverse [options]
-
-Options:
-  -build,--build  Build Terraformer Bin
-
-  -h, --help      display help for command
-
+			Options: 
+				-build,--build Build Terraformer Bin
+				-h, --help display help for command
+			
+	Must go to terraformer directory and run tf-reverse build command!		
